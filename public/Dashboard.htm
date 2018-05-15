@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://symbiot4.creatingo.com/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="Jozef Dvorský - creatingo.com">
+	<link href="./asset/favicon.png" rel="shortcut icon">
+
+	<title>Codeface assent Management</title>
+
+	<!-- Bootstrap CSS with custom theme variables + Additional styles for this template -->
+	<link href="./css/iot-theme-bundle.min.css" rel="stylesheet">
+	<link href="./css/customized.css" rel="stylesheet">
+	
+
+</head>
+
+<body>
+
+	<!-- Preloader -->
+	<div id="iot-preloader" style="display: none;">
+		<div class="center-preloader d-flex align-items-center">
+			<div class="spinners">
+				<div class="spinner01"></div>
+				<div class="spinner02"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Alerts Modal -->
+	<div class="modal modal-nobg centered fade" id="alertsModal" tabindex="-1" role="dialog" aria-label="Alerts" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="alert alert-danger alert-dismissible fade show border-0" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button> Security SW update available
+					</div>
+					<div class="alert alert-warning alert-dismissible fade show border-0" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button> New device recognized
+					</div>
+					<div class="alert alert-warning alert-dismissible fade show border-0" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button> User profile is not complete
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+	</div>
+
+	<!-- Temarature trending Modal -->
+	<div class="modal centered fade" id="temp_trend_View" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row"  data-unit-group="switch-lights-ex">
+						<div class="col-sm-12 col-md-6 col-xl-6" style="text-align: center" > <button  type="button"  class="btn btn-secondary doors-control" id ="room1_line">ROOM 1</button> </div>
+						<div class="col-sm-12 col-md-6 col-xl-6" style="text-align: center" ><button  type="button"  class="btn btn-secondary doors-control" id ="room2_line">ROOM 2</button> </div>
+
+					</div>
+					<div id="temp_trend"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+    <!--- Show temarature Value -->
+    <div class="modal centered fade" id="temp_sensor_View" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					 <h3 class="font-weight-bold" id="temp_sensor_value" style="text-align: center"></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+
+	<!--- Show device Value -->
+    <div class="modal centered fade" id="temp_device_View" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="deviceInfoSection">
+					 	<h4 style="color:#000000" >RFID</h4>
+					 	<p id="device_id" style="color:red"> </p>
+					</div>
+
+					 <div class="deviceInfoSection">
+					 	<h4 style="color:#000000" >Device Type</h4>
+					 	<p id="device_name" style="color:red"> </p>
+					</div>
+
+					<div class="deviceInfoSection">
+					 	<h4 style="color:#000000" >Device Brand</h4>
+					 	<p id="device_brand" style="color:red"> </p>
+					</div>
+					<div class="deviceInfoSection">
+					 	<h4 style="color:#000000" >Device Model</h4>
+					 	<p id="device_model" style="color:red" > </p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+	<!-- Arming Modal -->
+	<div class="modal modal-warning centered fade" id="armModal" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="armTimer">
+						<h3 class="font-weight-bold">EXIT NOW! <span class="timer font-weight-normal"></span></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+
+	<!-- Alarm Modal -->
+	<div class="modal modal-danger centered fade" id="alarmModal" tabindex="-1" role="dialog" aria-label="ALARM" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" data-dismiss="modal">
+				<div class="modal-body d-flex">
+					<svg class="icon-sprite icon-2x icon-pulse"><use xlink:href="./asset/icons-sprite.svg#alarm"></use></svg>
+					<h3 class="text-right font-weight-bold ml-auto align-self-center">MOTION DETECTED!</h3>
+				</div>
+			</div>
+			<p class="mt-2 text-center text-danger">Click the red area to accept/close message</p>
+		</div>
+	</div>
+
+	<!-- Wrapper START -->
+	<div id="wrapper" class="">
+		<!-- Top navbar START -->
+		<nav class="navbar navbar-expand fixed-top d-flex flex-row justify-content-start">
+			<div class="d-none d-lg-block">
+				<form>
+					<div id="menu-minifier" class="mini">
+						<label>
+							<svg width="32" height="32" viewBox="0 0 32 32">
+								<rect x="2" y="8" width="4" height="3" class="menu-dots"></rect>
+								<rect x="2" y="15" width="4" height="3" class="menu-dots"></rect>
+								<rect x="2" y="22" width="4" height="3" class="menu-dots"></rect>
+								<rect x="8" y="8" width="21" height="3" class="menu-lines"></rect>
+								<rect x="8" y="15" width="21" height="3" class="menu-lines"></rect>
+								<rect x="8" y="22" width="21" height="3" class="menu-lines"></rect>
+							</svg>
+							<input id="minifier" type="checkbox"> 
+						</label>
+						<div class="info-holder info-rb">
+							<div data-toggle="popover-all" data-content="Checkbox element using localStorage to remember the last status." data-original-title="Side menu narrowing" data-placement="right"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<a class="navbar-brand px-lg-3 px-1 mr-0" href="#">Codeface Asset Management</a>
+
+			<div class="ml-auto">
+				<div class="navbar-nav flex-row navbar-icons">
+					<div class="nav-item">
+						<button id="alerts-toggler" class="btn btn-link nav-link" title="Alerts" type="button" data-alerts="3" data-toggle="modal" data-target="#alertsModal">
+							<svg class="icon-sprite">
+								<use xlink:href="asset/icons-sprite.svg#alert"></use>
+								<svg class="text-danger"><use class="icon-dot" xlink:href="./asset/icons-sprite.svg#icon-dot"></use></svg>
+							</svg>
+						</button>
+					</div>
+					<div id="user-menu" class="nav-item dropdown">
+						<button class="btn btn-link nav-link dropdown-toggle" title="User" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<svg class="icon-sprite"><use xlink:href="asset/icons-sprite.svg#user"></use></svg>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="#">Profile</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Logout</a>
+						</div>
+					</div>
+					<div class="nav-item d-lg-none">
+						<button id="sidebar-toggler" type="button" class="btn btn-link nav-link" data-toggle="offcanvas">
+						  <svg class="icon-sprite"><use xlink:href="./asset/icons-sprite.svg#menu"></use></svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- Top navbar END -->
+		<!-- wrapper-offcanvas START -->
+		<div class="wrapper-offcanvas">
+			<!-- row-offcanvas START -->
+			<div class="row-offcanvas row-offcanvas-left">
+				<!-- Side menu START -->
+				<div id="sidebar" class="sidebar-offcanvas mini">
+					<ul class="nav flex-column nav-sidebar">
+						<li class="nav-item active">
+							<a class="nav-link active" href="#">
+								<svg class="icon-sprite"><use xlink:href="./asset/icons-sprite.svg#home"></use></svg> Dashboard
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- Side menu END -->
+				<!-- Main content START -->
+				<div id="main">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card p-2 mb-4">
+									<img src="./asset/logo.png" width="140" height="37" alt="CODEFACE" class="mx-auto">
+								</div>
+							</div>
+						</div>
+
+						<div class="row" data-unit-group="switch-lights-ex">
+				            <div class="col-sm-12 col-md-6 col-xl-4">
+				                <!-- ON/OFF all interior lights  START -->
+				                <div class="card">
+				                  <div class="card-body">
+									<div class="d-flex flex-wrap mb-2">
+											<div class="title-status">
+												<h5>Temperature</h5>
+											</div>
+											<div class="ml-auto" data-controls="garage-doors-1">
+												<button  type="button" class="btn btn-secondary doors-control" id ="btn_temp_trend" style="display: inline-block;">View trend</button>
+											</div>
+									</div>
+				                  </div>
+				                  <hr class="my-0">
+				                  <div class="card-body">
+				                    <div class="lights-controls" id="val_temp" data-controls="switch-lights-ex">
+				                       <div id="chart_div" style="width: 100%; height: 200px;"></div>
+				                    </div>
+				                  </div>
+				                </div>
+				                <!-- ON/OFF all interior lights  END -->
+				            </div>
+
+				            <div class="col-sm-12 col-md-6 col-xl-4">
+				                <div class="card">
+				                  <div class="card-body">
+				                    <div class="d-flex flex-wrap mb-2">
+											<div class="title-status">
+												<h5>Air Quality Monitor</h5>
+											</div>
+											<div class="ml-auto" data-controls="garage-doors-1">
+												<button  type="button" class="btn btn-secondary doors-control" id ="btn_air_trend" style="display: inline-block;">View trend</button>
+											</div>
+									</div>
+				                  </div>
+				                  <hr class="my-0">
+				                  <div class="card-body">
+				                    <div class="lights-controls" data-controls="switch-lights-ex">
+				                      <img src="./asset/airquality.png" class="img-responsive" style="width: 100%;height: 200px;" />
+				                    </div>
+				                  </div>
+				                </div>
+				            </div>
+
+				            <div class="col-sm-12 col-md-6 col-xl-4">
+				                <div class="card">
+				                  <div class="card-body">
+				                    <div class="d-flex flex-wrap mb-2">
+											<div class="title-status">
+												<h5>Humidity</h5>
+											</div>
+											<div class="ml-auto" data-controls="garage-doors-1">
+												<button  type="button" class="btn btn-secondary doors-control" id ="btn_humidity_trend" style="display: inline-block;">View trend</button>
+											</div>
+									</div>
+				                  </div>
+				                  <hr class="my-0">
+				                  <div class="card-body">
+				                    <div class="lights-controls" data-controls="switch-lights-ex">
+				                    	<img src="./asset/humiditychart.jpg" class="img-responsive" style="width: 100%;height: 200px;" />
+
+				                    </div>
+				                  </div>
+				                </div>
+				            </div>				              
+			            </div>
+						
+						<div class="row">
+							<div class="col-sm-12 col-md-12">
+								<!-- Camera 1  START -->
+								<div class="card active" data-unit="switch-camera-1">
+									<div class="card-img-top card-stream">
+										<img src="./asset/exit_down_icon.png" style="top: 38px;left: 537px;width: 50px;height: 40px; display:none" id="exit1_motion_plotter" class="img-responsive plotter plot_blink" />
+
+										<img src="./asset/exit_left_icon.png" style="top: 172px;left: 996px;width: 50px;height: 40px; display:none" id="exit2_motion_plotter" class="img-responsive plotter plot_blink" />
+
+
+										<img src="./asset/exit_up_icon.png" style="top: 485px;left: 769px;width: 50px;height: 40px; display:none" id="exit3_motion_plotter" class="img-responsive plotter plot_blink" />
+
+										<!--<img src="./asset/temapatureSensor.png" style="top: 485px;left: 769px;width: 50px;height: 40px; display:none" id="temp_room1" class="img-responsive plotter" />-->
+
+										<img src="./asset/temapatureSensor.png" style="top: 485px;left: 269px;width: 40px;height: 40px;" id="temp_room1" class="img-responsive plotter" />
+
+										<img src="./asset/temapatureSensor.png" style="top: 264px;left: 685px; width: 40px;height: 40px;" id="temp_room2" class="img-responsive plotter" />
+											<!--<img src="./asset/floorplan.jpg">  -->
+										<img src="./asset/floorplan.jpg" style="width: 100%" alt="placeholder 960" class="img-responsive" />
+									</div>
+									
+									
+								</div>
+								<!-- Camera 1  END -->
+							</div>
+						</div>
+						<div class="row">
+							
+						</div>
+					</div>
+					<!-- Main content overlay when side menu appears  -->
+					<div class="cover-offcanvas" data-toggle="offcanvas"></div>
+				</div>
+				<!-- Main content END -->
+			</div>
+			<!-- row-offcanvas END -->
+		</div>
+		<!-- wrapper-offcanvas END -->
+	</div>
+	<!-- Wrapper END -->
+
+	<!-- SVG assets - not visible -->
+	<svg id="svg-tool" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+      <style type="text/css">
+          .glow circle {fill:url(#radial-glow)}
+      </style>
+      <filter id="blur" x="-25%" y="-25%" width="150%" height="150%">
+          <fegaussianblur in="SourceGraphic" stdDeviation="3"></fegaussianblur>
+      </filter>
+      <radialgradient id="radial-glow" fx="50%" fy="50%" r="50%">
+          <stop offset="0" stop-color="#0F9CE6" stop-opacity="1"></stop>
+          <stop offset="1" stop-color="#0F9CE6" stop-opacity="0"></stop>
+      </radialgradient>
+    </defs>
+  </svg>
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+	<!-- Bootstrap bundle -->
+	<script src="./js/bootstrap.bundle.min.js"></script>
+
+	<!-- Cross browser support for SVG icon sprites -->
+	<script src="./js/svg4everybody.min.js"></script>
+
+	<!-- jQuery countdown timer plugin (Exit modal, Garage doors, Washing machine) -->
+	<script src="./js/iot-timer.min.js"></script>
+
+	<!-- Basic theme functionality (arming, garage doors, switches ...) - using jQuery -->
+	<script src="./js/iot-functions.min.js"></script>
+
+	<script>
+		var options = {};
+		var tempData = [];
+		var chartDataValue = {};
+		function updateTemprature(data){
+			var chart = chart || new google.visualization.Gauge(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		}
+		$(document).ready(function() {
+			$("#btn_temp_trend").click(function(){
+				buildTemparatureTrend("ROOM1");
+				$("#temp_trend_View").modal("show");
+			});
+
+			$("#room1_line").click(function(){ 
+				buildTemparatureTrend("ROOM1")
+			});
+
+			$("#room2_line").click(function(){ 
+				buildTemparatureTrend("ROOM2")
+			});
+
+			
+
+			$("#temp_room2").click(function(){
+				showTemparature("ROOM2")
+			});
+
+			$("#temp_room1").click(function(){
+				showTemparature("ROOM1")
+			});
+			
+
+			blink(900000, 1000);
+
+			
+             	google.charts.load('current', {'packages':['gauge','corechart', 'line']});
+      			google.charts.setOnLoadCallback(drawChart);
+
+      			function drawChart() {
+                
+      				var width = $("#val_temp").width();
+                    tempData  = [
+			          ['Label', 'Value'],
+			          ['ROOM1', 80],
+			          ['ROOM2', 55]
+			        ]
+			        chartDataValue = google.visualization.arrayToDataTable(tempData);
+
+			        options = {
+			          width: width+"px", height: 200,
+			          redFrom: 90, redTo: 100,
+			          yellowFrom:75, yellowTo: 90,
+			          minorTicks: 5
+			        };
+
+		        	var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+		        	chart.draw(chartDataValue, options);
+
+			        /*setInterval(function() {
+			          data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+			          chart.draw(data, options);
+			        }, 13000);
+			        setInterval(function() {
+			          data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+			          chart.draw(data, options);
+			        }, 5000);
+			        setInterval(function() {
+			          data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+			          chart.draw(data, options);
+			        }, 26000);*/
+		      }
+ 
+			// Get checkbox statuses from localStorage if available (IE)
+			if (localStorage) {
+
+				// Menu minifier status (Contract/expand side menu on large screens)
+				var checkboxValue = localStorage.getItem('minifier');
+
+				if (checkboxValue === 'true') {
+					$('#sidebar,#menu-minifier').addClass('mini');
+					$('#minifier').prop('checked', true);
+
+				} else {
+
+					if ($('#minifier').is(':checked')) {
+						$('#sidebar,#menu-minifier').addClass('mini');
+						$('#minifier').prop('checked', true);
+					} else {
+						$('#sidebar,#menu-minifier').removeClass('mini');
+						$('#minifier').prop('checked', false);
+					}
+				}
+
+				// Switch statuses
+				var switchValues = JSON.parse(localStorage.getItem('switchValues')) || {};
+
+				$.each(switchValues, function(key, value) {
+
+					// Apply only if element is included on the page
+					if ($('[data-unit="' + key + '"]').length) {
+
+						if (value === true) {
+
+							// Apply appearance of the "unit" and checkbox element
+							$('[data-unit="' + key + '"]').addClass("active");
+							$("#" + key).prop('checked', true);
+							$("#" + key).closest("label").addClass("checked");
+
+							//In case of Camera unit - play video
+							if (key === "switch-camera-1" || key === "switch-camera-2") {
+								$('[data-unit="' + key + '"] video')[0].play();
+							}
+
+						} else {
+							$('[data-unit="' + key + '"]').removeClass("active");
+							$("#" + key).prop('checked', false);
+							$("#" + key).closest("label").removeClass("checked");
+							if (key === "switch-camera-1" || key === "switch-camera-2") {
+								$('[data-unit="' + key + '"] video')[0].pause();
+							}
+						}
+					}
+				});
+			}
+
+
+			// Contract/expand side menu on click. (only large screens)
+			$('#minifier').click(function() {
+
+				$('#sidebar,#menu-minifier').toggleClass('mini');
+
+				// Save side menu status to localStorage if available (IE)
+				if (localStorage) {
+					checkboxValue = this.checked;
+					localStorage.setItem('minifier', checkboxValue);
+				}
+
+			});
+
+
+			// Side menu toogler for medium and small screens
+			$('[data-toggle="offcanvas"]').click(function() {
+				$('.row-offcanvas').toggleClass('active');
+			});
+
+
+			// Switch (checkbox element) toogler
+			$('.switch input[type="checkbox"]').on("change", function(t) {
+
+				// Check the time between changes to prevert Android native browser execute twice
+				// If you dont need support for Android native browser - just call "switchSingle" function
+				if (this.last) {
+
+					this.diff = t.timeStamp - this.last;
+
+					// Don't execute if the time between changes is too short (less than 250ms) - Android native browser "twice bug"
+					// The real time between two human taps/clicks is usually much more than 250ms"
+					if (this.diff > 250) {
+
+						this.last = t.timeStamp;
+
+						iot.switchSingle(this.id, this.checked);
+
+					} else {
+						return false;
+					}
+
+				} else {
+
+					// First attempt on this switch element
+					this.last = t.timeStamp;
+
+					iot.switchSingle(this.id, this.checked);
+
+				}
+			});
+
+			// All ON/OFF controls
+			$('.lights-control').click(function() {
+
+				var target = $(this).closest('.lights-controls').data('controls');
+				var action = $(this).data('action');
+
+				iot.switchGroup(target, action);
+			});
+
+			// Reposition to center when a modal is shown
+			$('.modal.centered').on('show.bs.modal', iot.centerModal);
+
+			// Reset/Stop countdown timer (EXIT NOW)
+			$('#armModal').on('hide.bs.modal', iot.clearCountdown);
+
+			// Garage doors controls
+			$('.doors-control').click(function() {
+
+				var target = $(this).closest('.timer-controls').data('controls');
+				var action = $(this).data('action');
+
+				iot.garageDoors(target, action);
+			});
+
+			// Alerts "Close" callback - hide modal and alert indicator dot when user closes all alerts
+			$('#alertsModal .alert').on('close.bs.alert', function() {
+				var sum = $('#alerts-toggler').attr('data-alerts');
+				sum = sum - 1;
+				$('#alerts-toggler').attr('data-alerts', sum);
+
+				if (sum === 0) {
+					$('#alertsModal').modal('hide');
+					$('#alerts-toggler').attr('data-toggle', 'none');
+
+				}
+
+			});
+
+			// Show/hide tips (popovers) - FAB button (right bottom on large screens)
+			$('#info-toggler').click(function() {
+
+				if ($('body').hasClass('info-active')) {
+					$('[data-toggle="popover-all"]').popover('hide');
+					$('body').removeClass('info-active');
+				} else {
+					$('[data-toggle="popover-all"]').popover('show');
+					$('body').addClass('info-active');
+				}
+			});
+
+			// Hide tips (popovers) by clicking outside
+			$('body').on('click', function(pop) {
+
+				if (pop.target.id !== 'info-toggler' && $('body').hasClass('info-active')) {
+					$('[data-toggle="popover-all"]').popover('hide');
+					$('body').removeClass('info-active');
+				}
+
+			});
+
+		});
+
+		// Apply necessary changes, functionality when content is loaded
+		$(window).on('load', function() {
+
+			// This script is necessary for cross browsers icon sprite support (IE9+, ...) 
+			svg4everybody();
+
+			// Washing machine - demonstration of running program/cycle
+			$('#wash-machine').timer({
+				countdown: true,
+				format: '%H:%M:%S',
+				duration: '1h17m10s',
+				callback: function() {
+					$('[data-unit="wash-machine"]').removeClass("active");
+				}
+			});
+
+			if ($('[data-unit="switch-camera-1"]').hasClass("active")) {
+				var activeVideo = $('[data-unit="switch-camera-1"] video').get(0);
+
+				if (activeVideo.paused) {
+					activeVideo.autoplay = true;
+					activeVideo.load();
+					activeVideo.play();
+				} else {
+					activeVideo.pause();
+				}
+			}
+
+			if ($('[data-unit="switch-camera-2"]').hasClass("active")) {
+				var activeVideo = $('[data-unit="switch-camera-2"] video').get(0);
+
+				if (activeVideo.paused) {
+					activeVideo.autoplay = true;
+					activeVideo.load();
+					activeVideo.play();
+				} else {
+					activeVideo.pause();
+				}
+			}
+
+			// "Timeout" function is not neccessary - important is to hide the preloader overlay
+			setTimeout(function() {
+
+				// Hide preloader overlay when content is loaded
+				$('#iot-preloader,.card-preloader').fadeOut();
+				$("#wrapper").removeClass("hidden");
+
+				// Check for Main contents scrollbar visibility and set right position for FAB button
+				iot.positionFab();
+
+			}, 800);
+
+		});
+
+		// Apply necessary changes if window resized
+		$(window).on('resize', function() {
+
+			// Modal reposition when the window is resized
+			$('.modal.centered:visible').each(iot.centerModal);
+
+			// Check for Main contents scrollbar visibility and set right position for FAB button
+			iot.positionFab();
+		});
+
+	</script>
+	<script src="Dashboard.js"></script>
+
+
+
+
+</body></html>

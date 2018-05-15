@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      td { vertical-align: top }
+    </style>
+  </head>
+  <body>
+
+
+    <fieldset>
+    <legend>Temprature</legend>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Room1</label>
+        <input type="input" class="form-control" id="in_temp_room1" placeholder="Temparature">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Room2</label>
+        <input type="input" class="form-control" id="in_temp_room2" placeholder="Temparature">
+      </div>
+
+    </fieldset>
+
+    <fieldset>
+    <legend>Humidity</legend>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Humidity</label>
+        <input type="input" class="form-control" id="in_humudity" placeholder="Humidity">
+      </div>
+    </fieldset>
+
+
+    <fieldset>
+    <legend>Air Quality</legend>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Air Quality</label>
+        <input type="input" class="form-control" id="in_air" placeholder="Air Quality">
+      </div>
+    </fieldset>
+
+    <fieldset>
+    <legend>Motion sensor</legend>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Exit 1</label>
+        <input type="input" class="form-control" id="in_exit1_motion" placeholder="Motion sensor">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Exit 2</label>
+        <input type="input" class="form-control" id="in_exit2_motion" placeholder="Motion sensor">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Exit 3</label>
+        <input type="input" class="form-control" id="in_exit3_motion" placeholder="Motion sensor">
+      </div>
+    </fieldset>
+
+     <fieldset>
+    <legend>Exit violation </legend>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Exit 1</label>
+        <input type="input" class="form-control" id="in_exit1_violate" placeholder="Exit violation">
+        <input type="input" class="form-control" id="in_exit1_device" placeholder="Exit violation">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Exit 2</label>
+        <input type="input" class="form-control" id="in_exit2_violate" placeholder="Exit violation">
+        <input type="input" class="form-control" id="in_exit2_device" placeholder="Exit violation">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Exit 3</label>
+        <input type="input" class="form-control" id="in_exit3_violate" placeholder="Exit violation">
+        <input type="input" class="form-control" id="in_exit3_device" placeholder="Exit violation">
+      </div>
+    </fieldset>
+
+
+
+
+    
+
+
+    <!--<div class="form-group">
+      <label for="exampleInputPassword1">Pressure</label>
+      <input type="input" class="form-control" id="in_preesure" placeholder="Password">
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputPassword1">Movement</label>
+      <input type="input" class="form-control" id="in_move" placeholder="Password">
+    </div>  -->
+
+    <p>
+
+      <button id="send">Send Message</button>
+    </p>
+    <ul id="log"></ul>
+    <script src="sensorinput.js"></script>
+  </body>
+</html>

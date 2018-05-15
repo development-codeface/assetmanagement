@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://localhost:9991/dashboard.htm -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="Jozef Dvorský - creatingo.com">
+	<link href="http://localhost:9991/asset/favicon.png" rel="shortcut icon">
+
+	<title>Codeface assent Management</title>
+
+	<!-- Bootstrap CSS with custom theme variables + Additional styles for this template -->
+	<link href="./Codeface assent Management_files/iot-theme-bundle.min.css" rel="stylesheet">
+	<link href="./Codeface assent Management_files/customized.css" rel="stylesheet">
+	
+
+<script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/loader.js"></script><link id="load-css-0" rel="stylesheet" type="text/css" href="./Codeface assent Management_files/tooltip.css"><link id="load-css-1" rel="stylesheet" type="text/css" href="./Codeface assent Management_files/util.css"><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/jsapi_compiled_format_module.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/jsapi_compiled_default_module.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/jsapi_compiled_ui_module.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/jsapi_compiled_gauge_module.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/jsapi_compiled_corechart_module.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/jsapi_compiled_fw_module.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/dygraph-tickers-combined.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/webfont.js"></script><script type="text/javascript" charset="UTF-8" src="./Codeface assent Management_files/jsapi_compiled_line_module.js"></script></head>
+
+<body>
+
+	<!-- Preloader -->
+	<div id="iot-preloader" style="display: none;">
+		<div class="center-preloader d-flex align-items-center">
+			<div class="spinners">
+				<div class="spinner01"></div>
+				<div class="spinner02"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Alerts Modal -->
+	<div class="modal modal-nobg centered fade" id="alertsModal" tabindex="-1" role="dialog" aria-label="Alerts" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="alert alert-danger alert-dismissible fade show border-0" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button> Security SW update available
+					</div>
+					<div class="alert alert-warning alert-dismissible fade show border-0" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button> New device recognized
+					</div>
+					<div class="alert alert-warning alert-dismissible fade show border-0" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button> User profile is not complete
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+	</div>
+
+	<!-- Temarature trending Modal -->
+	<div class="modal centered fade" id="temp_trend_View" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="row" data-unit-group="switch-lights-ex">
+						<div class="col-sm-12 col-md-6 col-xl-6" style="text-align: center"> <button type="button" class="btn btn-secondary doors-control" id="room1_line">ROOM 1</button> </div>
+						<div class="col-sm-12 col-md-6 col-xl-6" style="text-align: center"><button type="button" class="btn btn-secondary doors-control" id="room2_line">ROOM 2</button> </div>
+
+					</div>
+					<div id="temp_trend"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	
+    <!--- Show temarature Value -->
+    <div class="modal centered fade" id="temp_sensor_View" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					 <h3 class="font-weight-bold" id="temp_sensor_value" style="text-align: center"></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	
+
+	<!--- Show device Value -->
+    <div class="modal centered fade" id="temp_device_View" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					 <div class="deviceInfoSection">
+					 	<label>Device Name</label>
+					 	<p id="device_name"> </p>p&gt;
+					</div>
+					<div class="deviceInfoSection">
+					 	<label>Device Brand</label>
+					 	<p id="device_brand"> </p>p&gt;
+					</div>
+					<div class="deviceInfoSection">
+					 	<label>Device Model</label>
+					 	<p id="device_model"> </p>p&gt;
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+	<!-- Arming Modal -->
+	<div class="modal modal-warning centered fade" id="armModal" tabindex="-1" role="dialog" aria-label="Arming" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div id="armTimer">
+						<h3 class="font-weight-bold">EXIT NOW! <span class="timer font-weight-normal"></span></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+	</div>
+
+	<!-- Alarm Modal -->
+	<div class="modal modal-danger centered fade" id="alarmModal" tabindex="-1" role="dialog" aria-label="ALARM" aria-hidden="true" data-backdrop="static">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" data-dismiss="modal">
+				<div class="modal-body d-flex">
+					<svg class="icon-sprite icon-2x icon-pulse"><use xlink:href="./asset/icons-sprite.svg#alarm"></use></svg>
+					<h3 class="text-right font-weight-bold ml-auto align-self-center">MOTION DETECTED!</h3>
+				</div>
+			</div>
+			<p class="mt-2 text-center text-danger">Click the red area to accept/close message</p>
+		</div>
+	</div>
+
+	<!-- Wrapper START -->
+	<div id="wrapper" class="">
+		<!-- Top navbar START -->
+		<nav class="navbar navbar-expand fixed-top d-flex flex-row justify-content-start">
+			<div class="d-none d-lg-block">
+				<form>
+					<div id="menu-minifier" class="">
+						<label>
+							<svg width="32" height="32" viewBox="0 0 32 32">
+								<rect x="2" y="8" width="4" height="3" class="menu-dots"></rect>
+								<rect x="2" y="15" width="4" height="3" class="menu-dots"></rect>
+								<rect x="2" y="22" width="4" height="3" class="menu-dots"></rect>
+								<rect x="8" y="8" width="21" height="3" class="menu-lines"></rect>
+								<rect x="8" y="15" width="21" height="3" class="menu-lines"></rect>
+								<rect x="8" y="22" width="21" height="3" class="menu-lines"></rect>
+							</svg>
+							<input id="minifier" type="checkbox"> 
+						</label>
+						<div class="info-holder info-rb">
+							<div data-toggle="popover-all" data-content="Checkbox element using localStorage to remember the last status." data-original-title="Side menu narrowing" data-placement="right"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<a class="navbar-brand px-lg-3 px-1 mr-0" href="http://localhost:9991/dashboard.htm#">Codeface Asset Management</a>
+
+			<div class="ml-auto">
+				<div class="navbar-nav flex-row navbar-icons">
+					<div class="nav-item">
+						<button id="alerts-toggler" class="btn btn-link nav-link" title="Alerts" type="button" data-alerts="3" data-toggle="modal" data-target="#alertsModal">
+							<svg class="icon-sprite">
+								<use xlink:href="asset/icons-sprite.svg#alert"></use>
+								<svg class="text-danger"><use class="icon-dot" xlink:href="./asset/icons-sprite.svg#icon-dot"></use></svg>
+							</svg>
+						</button>
+					</div>
+					<div id="user-menu" class="nav-item dropdown">
+						<button class="btn btn-link nav-link dropdown-toggle" title="User" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<svg class="icon-sprite"><use xlink:href="asset/icons-sprite.svg#user"></use></svg>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="http://localhost:9991/dashboard.htm#">Profile</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="http://localhost:9991/dashboard.htm#">Logout</a>
+						</div>
+					</div>
+					<div class="nav-item d-lg-none">
+						<button id="sidebar-toggler" type="button" class="btn btn-link nav-link" data-toggle="offcanvas">
+						  <svg class="icon-sprite"><use xlink:href="./asset/icons-sprite.svg#menu"></use></svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<!-- Top navbar END -->
+		<!-- wrapper-offcanvas START -->
+		<div class="wrapper-offcanvas">
+			<!-- row-offcanvas START -->
+			<div class="row-offcanvas row-offcanvas-left">
+				<!-- Side menu START -->
+				<div id="sidebar" class="sidebar-offcanvas">
+					<ul class="nav flex-column nav-sidebar">
+						<li class="nav-item active">
+							<a class="nav-link active" href="http://localhost:9991/dashboard.htm#">
+								<svg class="icon-sprite"><use xlink:href="./asset/icons-sprite.svg#home"></use></svg> Dashboard
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- Side menu END -->
+				<!-- Main content START -->
+				<div id="main">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card p-2 mb-4">
+									<img src="./Codeface assent Management_files/logo.png" width="140" height="37" alt="CODEFACE" class="mx-auto" style="opacity: 1;">
+								</div>
+							</div>
+						</div>
+
+						<div class="row" data-unit-group="switch-lights-ex">
+				            <div class="col-sm-12 col-md-6 col-xl-4">
+				                <!-- ON/OFF all interior lights  START -->
+				                <div class="card">
+				                  <div class="card-body">
+									<div class="d-flex flex-wrap mb-2">
+											<div class="title-status">
+												<h5>Temperature</h5>
+											</div>
+											<div class="ml-auto" data-controls="garage-doors-1">
+												<button type="button" class="btn btn-secondary doors-control" id="btn_temp_trend" style="display: inline-block;">View trend</button>
+											</div>
+									</div>
+				                  </div>
+				                  <hr class="my-0">
+				                  <div class="card-body">
+				                    <div class="lights-controls" id="val_temp" data-controls="switch-lights-ex">
+				                       <div id="chart_div" style="width: 100%; height: 200px;"><table cellpadding="0" cellspacing="0" align="center" style="border: 0px; padding: 0px; margin: 0px;"><tbody><tr style="border: 0px; padding: 0px; margin: 0px;"><td style="border: 0px; padding: 0px; margin: 0px; width: 156px;"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 156px; height: 156px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="156" height="156" aria-label="A chart." style="overflow: hidden;"><defs id="defs"></defs><g><circle cx="77.5" cy="77.5" r="70" stroke="#333333" stroke-width="1" fill="#cccccc"></circle><circle cx="77.5" cy="77.5" r="62" stroke="#e0e0e0" stroke-width="2" fill="#f7f7f7"></circle><path d="M131.58501288565463,55.804360922824806A58,58,0,0,1,133.1612779451189,95.92298567374695L119.37095845883918,91.4422392553102A43.5,43.5,0,0,0,118.18875966424098,61.3532706921186Z" stroke="none" stroke-width="0" fill="#ff9900"></path><path d="M133.1612779451189,95.92298567374694A58,58,0,0,1,119.01219330881976,119.01219330881975L108.75914498161485,108.75914498161478A43.5,43.5,0,0,0,119.37095845883917,91.44223925531021Z" stroke="none" stroke-width="0" fill="#dc3912"></path><text text-anchor="middle" x="78" y="63.6" font-family="arial" font-size="16" stroke="none" stroke-width="0" fill="#333333">ROOM1</text><text text-anchor="start" x="48.01867247769039" y="110.78132752230961" font-family="arial" font-size="8" stroke="none" stroke-width="0" fill="#333333">0</text><text text-anchor="end" x="107.98132752230966" y="110.78132752230958" font-family="arial" font-size="8" stroke="none" stroke-width="0" fill="#333333">100</text><path d="M33.49218342071639,105.27442507817253L28.546870467462654,108.30491675352503M28.354849849392984,94.13068710637226L22.838722054881096,95.92298567374695M25.960915179130716,82.09556479699351L20.178794643478575,82.55062755221502M26.44266862093381,69.83412092489996L20.714076245482012,68.92680102766661M35.76931289362774,47.317609830332906L31.07701432625305,43.90845536703657M44.09881187716439,38.3068085956784L40.332013196849324,33.89645399519823M54.30169591359565,31.489459437367202L51.668551015106274,26.321621597074667M65.81415200672176,27.242290155241278L64.4601688963575,21.60254461693475M90.18584799327823,27.24229015524127L91.53983110364248,21.60254461693475M101.69830408640433,31.489459437367188L104.33144898489371,26.321621597074653M111.9011881228356,38.30680859567839L115.66798680315067,33.896453995198215M120.23068710637224,47.317609830332884L124.92298567374695,43.908455367036545M129.5573313790662,69.83412092489993L135.28592375451797,68.9268010276666M130.03908482086928,82.09556479699347L135.82120535652143,82.55062755221496M127.64515015060702,94.13068710637225L133.1612779451189,95.92298567374694M122.50781657928363,105.2744250781725L127.45312953253737,108.30491675352499" stroke="#666666" stroke-width="1" fill-opacity="1" fill="none"></path><path d="M45.190245352944196,110.80975464705581L36.987806691180246,119.01219330881976M35.13198969147628,60.243488738259856L24.414987114345358,55.80436092282483M77.99999999999999,31.599999999999994L77.99999999999999,20M120.86801030852371,60.24348873825984L131.58501288565463,55.804360922824806M110.80975464705585,110.80975464705577L119.0121933088198,119.01219330881972" stroke="#333333" stroke-width="2" fill-opacity="1" fill="none"></path><g><text text-anchor="middle" x="78" y="127.6" font-family="arial" font-size="16" stroke="none" stroke-width="0" fill="#000000">80</text><path d="M132.32285873273258,69.39610442278729C78.63512392806334,82.01001466281626,61.52686017391433,82.66439323709206,61.20929820988266,80.65938590568393C60.89173624585099,78.65437857427581,77.36487607193666,73.98998533718374,132.32285873273258,69.39610442278729" stroke="#c63310" stroke-width="1" fill-opacity="0.7" fill="#dc3912"></path><circle cx="77.5" cy="77.5" r="9" stroke="#666666" stroke-width="1" fill="#4684ee"></circle></g></g></svg></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 166px; left: 166px; white-space: nowrap; font-family: Arial; font-size: 8px;">-._.-*^*-._.-*^*-._.-</div></div></td><td style="border: 0px; padding: 0px; margin: 0px; width: 156px;"><div style="position: relative;"><div dir="ltr" style="position: relative; width: 156px; height: 156px;"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;"><svg width="156" height="156" aria-label="A chart." style="overflow: hidden;"><defs id="defs"></defs><g><circle cx="77.5" cy="77.5" r="70" stroke="#333333" stroke-width="1" fill="#cccccc"></circle><circle cx="77.5" cy="77.5" r="62" stroke="#e0e0e0" stroke-width="2" fill="#f7f7f7"></circle><path d="M131.58501288565463,55.804360922824806A58,58,0,0,1,133.1612779451189,95.92298567374695L119.37095845883918,91.4422392553102A43.5,43.5,0,0,0,118.18875966424098,61.3532706921186Z" stroke="none" stroke-width="0" fill="#ff9900"></path><path d="M133.1612779451189,95.92298567374694A58,58,0,0,1,119.01219330881976,119.01219330881975L108.75914498161485,108.75914498161478A43.5,43.5,0,0,0,119.37095845883917,91.44223925531021Z" stroke="none" stroke-width="0" fill="#dc3912"></path><text text-anchor="middle" x="78" y="63.6" font-family="arial" font-size="16" stroke="none" stroke-width="0" fill="#333333">ROOM2</text><text text-anchor="start" x="48.01867247769039" y="110.78132752230961" font-family="arial" font-size="8" stroke="none" stroke-width="0" fill="#333333">0</text><text text-anchor="end" x="107.98132752230966" y="110.78132752230958" font-family="arial" font-size="8" stroke="none" stroke-width="0" fill="#333333">100</text><path d="M33.49218342071639,105.27442507817253L28.546870467462654,108.30491675352503M28.354849849392984,94.13068710637226L22.838722054881096,95.92298567374695M25.960915179130716,82.09556479699351L20.178794643478575,82.55062755221502M26.44266862093381,69.83412092489996L20.714076245482012,68.92680102766661M35.76931289362774,47.317609830332906L31.07701432625305,43.90845536703657M44.09881187716439,38.3068085956784L40.332013196849324,33.89645399519823M54.30169591359565,31.489459437367202L51.668551015106274,26.321621597074667M65.81415200672176,27.242290155241278L64.4601688963575,21.60254461693475M90.18584799327823,27.24229015524127L91.53983110364248,21.60254461693475M101.69830408640433,31.489459437367188L104.33144898489371,26.321621597074653M111.9011881228356,38.30680859567839L115.66798680315067,33.896453995198215M120.23068710637224,47.317609830332884L124.92298567374695,43.908455367036545M129.5573313790662,69.83412092489993L135.28592375451797,68.9268010276666M130.03908482086928,82.09556479699347L135.82120535652143,82.55062755221496M127.64515015060702,94.13068710637225L133.1612779451189,95.92298567374694M122.50781657928363,105.2744250781725L127.45312953253737,108.30491675352499" stroke="#666666" stroke-width="1" fill-opacity="1" fill="none"></path><path d="M45.190245352944196,110.80975464705581L36.987806691180246,119.01219330881976M35.13198969147628,60.243488738259856L24.414987114345358,55.80436092282483M77.99999999999999,31.599999999999994L77.99999999999999,20M120.86801030852371,60.24348873825984L131.58501288565463,55.804360922824806M110.80975464705585,110.80975464705577L119.0121933088198,119.01219330881972" stroke="#333333" stroke-width="2" fill-opacity="1" fill="none"></path><g><text text-anchor="middle" x="78" y="127.6" font-family="arial" font-size="16" stroke="none" stroke-width="0" fill="#000000">55</text><path d="M90.83949501207476,24.519654378127775C81.94782187681457,78.94778817725498,76.0053397528569,95.004182735388,74.03142881444961,94.53028864676051C72.05751787604233,94.05639455813302,74.05217812318543,77.05221182274502,90.83949501207476,24.519654378127775" stroke="#c63310" stroke-width="1" fill-opacity="0.7" fill="#dc3912"></path><circle cx="77.5" cy="77.5" r="9" stroke="#666666" stroke-width="1" fill="#4684ee"></circle></g></g></svg></div></div><div aria-hidden="true" style="display: none; position: absolute; top: 166px; left: 166px; white-space: nowrap; font-family: Arial; font-size: 8px;">-._.-*^*-._.-*^*-._.-</div></div></td></tr></tbody></table></div>
+				                    </div>
+				                  </div>
+				                </div>
+				                <!-- ON/OFF all interior lights  END -->
+				            </div>
+
+				            <div class="col-sm-12 col-md-6 col-xl-4">
+				                <div class="card">
+				                  <div class="card-body">
+				                    <div class="d-flex flex-wrap mb-2">
+											<div class="title-status">
+												<h5>Air Quality Monitor</h5>
+											</div>
+											<div class="ml-auto" data-controls="garage-doors-1">
+												<button type="button" class="btn btn-secondary doors-control" id="btn_air_trend" style="display: inline-block;">View trend</button>
+											</div>
+									</div>
+				                  </div>
+				                  <hr class="my-0">
+				                  <div class="card-body">
+				                    <div class="lights-controls" data-controls="switch-lights-ex">
+				                      <img src="./Codeface assent Management_files/airquality.png" class="img-responsive" style="width: 100%; height: 200px; opacity: 1;">
+				                    </div>
+				                  </div>
+				                </div>
+				            </div>
+
+				            <div class="col-sm-12 col-md-6 col-xl-4">
+				                <div class="card">
+				                  <div class="card-body">
+				                    <div class="d-flex flex-wrap mb-2">
+											<div class="title-status">
+												<h5>Humidity</h5>
+											</div>
+											<div class="ml-auto" data-controls="garage-doors-1">
+												<button type="button" class="btn btn-secondary doors-control" id="btn_humidity_trend" style="display: inline-block;">View trend</button>
+											</div>
+									</div>
+				                  </div>
+				                  <hr class="my-0">
+				                  <div class="card-body">
+				                    <div class="lights-controls" data-controls="switch-lights-ex">
+				                    	<img src="./Codeface assent Management_files/humiditychart.jpg" class="img-responsive" style="width: 100%; height: 200px; opacity: 1;">
+
+				                    </div>
+				                  </div>
+				                </div>
+				            </div>				              
+			            </div>
+						
+						<div class="row">
+							<div class="col-sm-12 col-md-12">
+								<!-- Camera 1  START -->
+								<div class="card active" data-unit="switch-camera-1">
+									<div class="card-img-top card-stream">
+										<img src="./Codeface assent Management_files/exit_down_icon.png" style="top: 38px; left: 537px; width: 50px; height: 40px; display: none; opacity: 0.1;" id="exit1_motion_plotter" class="img-responsive plotter plot_blink">
+
+										<img src="./Codeface assent Management_files/exit_left_icon.png" style="top: 172px; left: 996px; width: 50px; height: 40px; display: none; opacity: 0.1;" id="exit2_motion_plotter" class="img-responsive plotter plot_blink">
+
+
+										<img src="./Codeface assent Management_files/exit_up_icon.png" style="top: 485px; left: 769px; width: 50px; height: 40px; display: none; opacity: 0.1;" id="exit3_motion_plotter" class="img-responsive plotter plot_blink">
+
+										<!--<img src="./asset/temapatureSensor.png" style="top: 485px;left: 769px;width: 50px;height: 40px; display:none" id="temp_room1" class="img-responsive plotter" />-->
+
+										<img src="./Codeface assent Management_files/temapatureSensor.png" style="top: 485px; left: 269px; width: 40px; height: 40px; opacity: 1;" id="temp_room1" class="img-responsive plotter">
+
+										<img src="./Codeface assent Management_files/temapatureSensor.png" style="top: 264px; left: 685px; width: 40px; height: 40px; opacity: 1;" id="temp_room2" class="img-responsive plotter">
+											<!--<img src="./asset/floorplan.jpg">  -->
+										<img src="./Codeface assent Management_files/floorplan.jpg" style="width: 100%; opacity: 1;" alt="placeholder 960" class="img-responsive">
+									</div>
+									
+									
+								</div>
+								<!-- Camera 1  END -->
+							</div>
+						</div>
+						<div class="row">
+							
+						</div>
+					</div>
+					<!-- Main content overlay when side menu appears  -->
+					<div class="cover-offcanvas" data-toggle="offcanvas"></div>
+				</div>
+				<!-- Main content END -->
+			</div>
+			<!-- row-offcanvas END -->
+		</div>
+		<!-- wrapper-offcanvas END -->
+	</div>
+	<!-- Wrapper END -->
+
+	<!-- SVG assets - not visible -->
+	<svg id="svg-tool" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+      <style type="text/css">
+          .glow circle {fill:url(#radial-glow)}
+      </style>
+      <filter id="blur" x="-25%" y="-25%" width="150%" height="150%">
+          <fegaussianblur in="SourceGraphic" stdDeviation="3"></fegaussianblur>
+      </filter>
+      <radialgradient id="radial-glow" fx="50%" fy="50%" r="50%">
+          <stop offset="0" stop-color="#0F9CE6" stop-opacity="1"></stop>
+          <stop offset="1" stop-color="#0F9CE6" stop-opacity="0"></stop>
+      </radialgradient>
+    </defs>
+  </svg>
+
+	<!-- jQuery -->
+	<script src="./Codeface assent Management_files/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="./Codeface assent Management_files/loader(1).js"></script>
+
+	<!-- Bootstrap bundle -->
+	<script src="./Codeface assent Management_files/bootstrap.bundle.min.js"></script>
+
+	<!-- Cross browser support for SVG icon sprites -->
+	<script src="./Codeface assent Management_files/svg4everybody.min.js"></script>
+
+	<!-- jQuery countdown timer plugin (Exit modal, Garage doors, Washing machine) -->
+	<script src="./Codeface assent Management_files/iot-timer.min.js"></script>
+
+	<!-- Basic theme functionality (arming, garage doors, switches ...) - using jQuery -->
+	<script src="./Codeface assent Management_files/iot-functions.min.js"></script>
+
+	<script>
+		var options = {};
+		var tempData = [];
+		var chartDataValue = {};
+		function updateTemprature(data){
+			var chart = chart || new google.visualization.Gauge(document.getElementById('chart_div'));
+			chart.draw(data, options);
+		}
+		$(document).ready(function() {
+			$("#btn_temp_trend").click(function(){
+				buildTemparatureTrend("ROOM1");
+				$("#temp_trend_View").modal("show");
+			});
+
+			$("#room1_line").click(function(){ 
+				buildTemparatureTrend("ROOM1")
+			});
+
+			$("#room2_line").click(function(){ 
+				buildTemparatureTrend("ROOM2")
+			});
+
+			
+
+			$("#temp_room2").click(function(){
+				showTemparature("ROOM2")
+			});
+
+			$("#temp_room1").click(function(){
+				showTemparature("ROOM1")
+			});
+
+			
+			
+
+			blink(900000, 1000);
+
+			
+             	google.charts.load('current', {'packages':['gauge','corechart', 'line']});
+      			google.charts.setOnLoadCallback(drawChart);
+
+      			function drawChart() {
+                
+      				var width = $("#val_temp").width();
+                    tempData  = [
+			          ['Label', 'Value'],
+			          ['ROOM1', 80],
+			          ['ROOM2', 55]
+			        ]
+			        chartDataValue = google.visualization.arrayToDataTable(tempData);
+
+			        options = {
+			          width: width+"px", height: 200,
+			          redFrom: 90, redTo: 100,
+			          yellowFrom:75, yellowTo: 90,
+			          minorTicks: 5
+			        };
+
+		        	var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+		        	chart.draw(chartDataValue, options);
+
+			        /*setInterval(function() {
+			          data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+			          chart.draw(data, options);
+			        }, 13000);
+			        setInterval(function() {
+			          data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+			          chart.draw(data, options);
+			        }, 5000);
+			        setInterval(function() {
+			          data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+			          chart.draw(data, options);
+			        }, 26000);*/
+		      }
+ 
+			// Get checkbox statuses from localStorage if available (IE)
+			if (localStorage) {
+
+				// Menu minifier status (Contract/expand side menu on large screens)
+				var checkboxValue = localStorage.getItem('minifier');
+
+				if (checkboxValue === 'true') {
+					$('#sidebar,#menu-minifier').addClass('mini');
+					$('#minifier').prop('checked', true);
+
+				} else {
+
+					if ($('#minifier').is(':checked')) {
+						$('#sidebar,#menu-minifier').addClass('mini');
+						$('#minifier').prop('checked', true);
+					} else {
+						$('#sidebar,#menu-minifier').removeClass('mini');
+						$('#minifier').prop('checked', false);
+					}
+				}
+
+				// Switch statuses
+				var switchValues = JSON.parse(localStorage.getItem('switchValues')) || {};
+
+				$.each(switchValues, function(key, value) {
+
+					// Apply only if element is included on the page
+					if ($('[data-unit="' + key + '"]').length) {
+
+						if (value === true) {
+
+							// Apply appearance of the "unit" and checkbox element
+							$('[data-unit="' + key + '"]').addClass("active");
+							$("#" + key).prop('checked', true);
+							$("#" + key).closest("label").addClass("checked");
+
+							//In case of Camera unit - play video
+							if (key === "switch-camera-1" || key === "switch-camera-2") {
+								$('[data-unit="' + key + '"] video')[0].play();
+							}
+
+						} else {
+							$('[data-unit="' + key + '"]').removeClass("active");
+							$("#" + key).prop('checked', false);
+							$("#" + key).closest("label").removeClass("checked");
+							if (key === "switch-camera-1" || key === "switch-camera-2") {
+								$('[data-unit="' + key + '"] video')[0].pause();
+							}
+						}
+					}
+				});
+			}
+
+
+			// Contract/expand side menu on click. (only large screens)
+			$('#minifier').click(function() {
+
+				$('#sidebar,#menu-minifier').toggleClass('mini');
+
+				// Save side menu status to localStorage if available (IE)
+				if (localStorage) {
+					checkboxValue = this.checked;
+					localStorage.setItem('minifier', checkboxValue);
+				}
+
+			});
+
+
+			// Side menu toogler for medium and small screens
+			$('[data-toggle="offcanvas"]').click(function() {
+				$('.row-offcanvas').toggleClass('active');
+			});
+
+
+			// Switch (checkbox element) toogler
+			$('.switch input[type="checkbox"]').on("change", function(t) {
+
+				// Check the time between changes to prevert Android native browser execute twice
+				// If you dont need support for Android native browser - just call "switchSingle" function
+				if (this.last) {
+
+					this.diff = t.timeStamp - this.last;
+
+					// Don't execute if the time between changes is too short (less than 250ms) - Android native browser "twice bug"
+					// The real time between two human taps/clicks is usually much more than 250ms"
+					if (this.diff > 250) {
+
+						this.last = t.timeStamp;
+
+						iot.switchSingle(this.id, this.checked);
+
+					} else {
+						return false;
+					}
+
+				} else {
+
+					// First attempt on this switch element
+					this.last = t.timeStamp;
+
+					iot.switchSingle(this.id, this.checked);
+
+				}
+			});
+
+			// All ON/OFF controls
+			$('.lights-control').click(function() {
+
+				var target = $(this).closest('.lights-controls').data('controls');
+				var action = $(this).data('action');
+
+				iot.switchGroup(target, action);
+			});
+
+			// Reposition to center when a modal is shown
+			$('.modal.centered').on('show.bs.modal', iot.centerModal);
+
+			// Reset/Stop countdown timer (EXIT NOW)
+			$('#armModal').on('hide.bs.modal', iot.clearCountdown);
+
+			// Garage doors controls
+			$('.doors-control').click(function() {
+
+				var target = $(this).closest('.timer-controls').data('controls');
+				var action = $(this).data('action');
+
+				iot.garageDoors(target, action);
+			});
+
+			// Alerts "Close" callback - hide modal and alert indicator dot when user closes all alerts
+			$('#alertsModal .alert').on('close.bs.alert', function() {
+				var sum = $('#alerts-toggler').attr('data-alerts');
+				sum = sum - 1;
+				$('#alerts-toggler').attr('data-alerts', sum);
+
+				if (sum === 0) {
+					$('#alertsModal').modal('hide');
+					$('#alerts-toggler').attr('data-toggle', 'none');
+
+				}
+
+			});
+
+			// Show/hide tips (popovers) - FAB button (right bottom on large screens)
+			$('#info-toggler').click(function() {
+
+				if ($('body').hasClass('info-active')) {
+					$('[data-toggle="popover-all"]').popover('hide');
+					$('body').removeClass('info-active');
+				} else {
+					$('[data-toggle="popover-all"]').popover('show');
+					$('body').addClass('info-active');
+				}
+			});
+
+			// Hide tips (popovers) by clicking outside
+			$('body').on('click', function(pop) {
+
+				if (pop.target.id !== 'info-toggler' && $('body').hasClass('info-active')) {
+					$('[data-toggle="popover-all"]').popover('hide');
+					$('body').removeClass('info-active');
+				}
+
+			});
+
+		});
+
+		// Apply necessary changes, functionality when content is loaded
+		$(window).on('load', function() {
+
+			// This script is necessary for cross browsers icon sprite support (IE9+, ...) 
+			svg4everybody();
+
+			// Washing machine - demonstration of running program/cycle
+			$('#wash-machine').timer({
+				countdown: true,
+				format: '%H:%M:%S',
+				duration: '1h17m10s',
+				callback: function() {
+					$('[data-unit="wash-machine"]').removeClass("active");
+				}
+			});
+
+			if ($('[data-unit="switch-camera-1"]').hasClass("active")) {
+				var activeVideo = $('[data-unit="switch-camera-1"] video').get(0);
+
+				if (activeVideo.paused) {
+					activeVideo.autoplay = true;
+					activeVideo.load();
+					activeVideo.play();
+				} else {
+					activeVideo.pause();
+				}
+			}
+
+			if ($('[data-unit="switch-camera-2"]').hasClass("active")) {
+				var activeVideo = $('[data-unit="switch-camera-2"] video').get(0);
+
+				if (activeVideo.paused) {
+					activeVideo.autoplay = true;
+					activeVideo.load();
+					activeVideo.play();
+				} else {
+					activeVideo.pause();
+				}
+			}
+
+			// "Timeout" function is not neccessary - important is to hide the preloader overlay
+			setTimeout(function() {
+
+				// Hide preloader overlay when content is loaded
+				$('#iot-preloader,.card-preloader').fadeOut();
+				$("#wrapper").removeClass("hidden");
+
+				// Check for Main contents scrollbar visibility and set right position for FAB button
+				iot.positionFab();
+
+			}, 800);
+
+		});
+
+		// Apply necessary changes if window resized
+		$(window).on('resize', function() {
+
+			// Modal reposition when the window is resized
+			$('.modal.centered:visible').each(iot.centerModal);
+
+			// Check for Main contents scrollbar visibility and set right position for FAB button
+			iot.positionFab();
+		});
+
+	</script>
+	<script src="./Codeface assent Management_files/Dashboard.js"></script>
+
+
+
+
+</body></html>
